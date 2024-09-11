@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace sorting
 {
@@ -320,7 +321,7 @@ namespace sorting
             }
         }
 
-        static void merge(int[] arr, int l, int m, int r)
+        static void merge(int[] array, int l, int m, int r)
         {
             int n1 = m - l + 1;
             int n2 = r - m;
@@ -328,9 +329,9 @@ namespace sorting
             int[] R = new int[n2];
             int i, j;
             for (i = 0; i < n1; ++i)
-                L[i] = arr[l + i];
+                L[i] = array[l + i];
             for (j = 0; j < n2; ++j)
-                R[j] = arr[m + 1 + j];
+                R[j] = array[m + 1 + j];
             i = 0;
             j = 0;
             int k = l;
@@ -338,45 +339,87 @@ namespace sorting
             {
                 if (L[i] <= R[j])
                 {
-                    arr[k] = L[i];
+                    array[k] = L[i];
                     i++;
                 }
                 else
                 {
-                    arr[k] = R[j];
+                    array[k] = R[j];
                     j++;
                 }
                 k++;
             }
             while (i < n1)
             {
-                arr[k] = L[i];
+                array[k] = L[i];
                 i++;
                 k++;
             }
             while (j < n2)
             {
-                arr[k] = R[j];
+                array[k] = R[j];
                 j++;
                 k++;
             }
         }
 
-        public static void MergeSort(int[] arr, int l, int r)
+        public static void MergeSort(int[] array, int l, int r)
         {
             if (l < r)
             {
-
-                // Find the middle point
                 int m = l + (r - l) / 2;
-
-                // Sort first and second halves
-                MergeSort(arr, l, m);
-                MergeSort(arr, m + 1, r);
-
-                // Merge the sorted halves
-                merge(arr, l, m, r);
+                MergeSort(array, l, m);
+                MergeSort(array, m + 1, r);
+                merge(array, l, m, r);
             }
+        }
+
+        public static void CountingSort(int[] array, int k)
+        {
+            var count = new int[k+1];
+            for (var i = 0; i < array.Length; i++)
+            {
+                count[array[i]]++;
+            }
+
+            var index = 0;
+            for (var i = 0; i < count.Length; i++)
+            {
+                for (var j = 0; j < count[i]; j++)
+                {
+                    array[index] = i;
+                    index++;
+                }
+            }
+        }
+
+        public static void BucketSort(int[] array, int bucketCount)
+        {
+            var buckets = new List<int>[bucketCount];
+            for (int i = 0; i < bucketCount; i++)
+                buckets[i] = new List<int>(array.Length / bucketCount);
+
+            var min = double.MaxValue;
+            var max = -double.MaxValue;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                min = Math.Min(min, array[i]);
+                max = Math.Max(max, array[i]);
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                var idx = Math.Min(bucketCount - 1, (int)(bucketCount * (array[i] - min) / (max - min)));
+                buckets[idx].Add(array[i]);
+            }
+
+            Parallel.For(0, bucketCount, i => buckets[i].Sort());
+
+            var index = 0;
+            for (var i = 0; i < bucketCount; i++)
+                for (var j = 0; j < buckets[i].Count; j++)
+                    array[index++] = buckets[i][j];
         }
 
 
