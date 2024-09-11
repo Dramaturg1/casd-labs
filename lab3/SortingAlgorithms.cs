@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace sorting
 {
@@ -202,6 +203,179 @@ namespace sorting
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = sortedList[i];
+            }
+        }
+
+        static void GnomeSort(int[] array)
+        {
+            int index = 0;
+
+            while (index < array.Length)
+            {
+                if (index == 0)
+                    index++;
+                if (array[index] >= array[index - 1])
+                    index++;
+                else
+                {
+                    int temp = 0;
+                    temp = array[index];
+                    array[index] = array[index - 1];
+                    array[index - 1] = temp;
+                    index--;
+                }
+            }
+            return;
+        }
+
+        public static void SelectionSort(int[] array)
+        {
+            int n = array.Length;
+            for (int i = 0; i < n - 1; i++)
+            {
+                int min_idx = i;
+                for (int j = i + 1; j < n; j++)
+                    if (array[j] < array[min_idx])
+                        min_idx = j;
+                int temp = array[min_idx];
+                array[min_idx] = array[i];
+                array[i] = temp;
+            }
+        }
+
+        public static void HeapSort(int[] array)
+        {
+            int N = array.Length;
+            for (int i = N / 2 - 1; i >= 0; i--)
+                heapify(array, N, i);
+            for (int i = N - 1; i > 0; i--)
+            {
+                int temp = array[0];
+                array[0] = array[i];
+                array[i] = temp;
+                heapify(array, i, 0);
+            }
+        }
+
+        static void heapify(int[] array, int N, int i)
+        {
+            int largest = i;
+            int l = 2 * i + 1;
+            int r = 2 * i + 2;
+            if (l < N && array[l] > array[largest])
+                largest = l;
+            if (r < N && array[r] > array[largest])
+                largest = r;
+            if (largest != i)
+            {
+                int swap = array[i];
+                array[i] = array[largest];
+                array[largest] = swap;
+                heapify(array, N, largest);
+            }
+        }
+
+        public static void QuickSort(int[] array, int left, int right)
+        {
+            if (left < right)
+            {
+                int pivot = Partition(array, left, right);
+                if (pivot > 1)
+                {
+                    QuickSort(array, left, pivot - 1);
+                }
+                if (pivot + 1 < right)
+                {
+                    QuickSort(array, pivot + 1, right);
+                }
+            }
+        }
+
+        static int Partition(int[] array, int left, int right)
+        {
+
+            int pivot = array[left];
+            while (true)
+            {
+                while (array[left] < pivot)
+                {
+                    left++;
+                }
+                while (array[right] > pivot)
+                {
+                    right--;
+                }
+                if (left < right)
+                {
+                    if (array[left] == array[right]) return right;
+
+                    int temp = array[left];
+                    array[left] = array[right];
+                    array[right] = temp;
+                }
+                else
+                {
+                    return right;
+                }
+            }
+        }
+
+        static void merge(int[] arr, int l, int m, int r)
+        {
+            int n1 = m - l + 1;
+            int n2 = r - m;
+            int[] L = new int[n1];
+            int[] R = new int[n2];
+            int i, j;
+            for (i = 0; i < n1; ++i)
+                L[i] = arr[l + i];
+            for (j = 0; j < n2; ++j)
+                R[j] = arr[m + 1 + j];
+            i = 0;
+            j = 0;
+            int k = l;
+            while (i < n1 && j < n2)
+            {
+                if (L[i] <= R[j])
+                {
+                    arr[k] = L[i];
+                    i++;
+                }
+                else
+                {
+                    arr[k] = R[j];
+                    j++;
+                }
+                k++;
+            }
+            while (i < n1)
+            {
+                arr[k] = L[i];
+                i++;
+                k++;
+            }
+            while (j < n2)
+            {
+                arr[k] = R[j];
+                j++;
+                k++;
+            }
+        }
+
+        public static void MergeSort(int[] arr, int l, int r)
+        {
+            if (l < r)
+            {
+
+                // Find the middle point
+                int m = l + (r - l) / 2;
+
+                // Sort first and second halves
+                MergeSort(arr, l, m);
+                MergeSort(arr, m + 1, r);
+
+                // Merge the sorted halves
+                merge(arr, l, m, r);
             }
         }
 
