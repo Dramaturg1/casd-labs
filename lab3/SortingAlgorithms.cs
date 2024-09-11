@@ -1,4 +1,6 @@
-﻿namespace sorting
+﻿using System.Collections.Generic;
+
+namespace sorting
 {
     internal class SortingAlgorithms
     {
@@ -90,7 +92,7 @@
             return gap;
         }
 
-        public static void IncertionSort(int[] array)
+        public static void InsertionSort(int[] array)
         {
             int n = array.Length;
             for (int i = 1; i < n; ++i)
@@ -105,5 +107,104 @@
                 array[j + 1] = key;
             }
         }
+
+        public static void ShellSort(int[] array)
+        {
+            int i, j, inc, temp;
+            inc = 3;
+            while (inc > 0)
+            {
+                for (i = 0; i < array.Length; i++)
+                {
+                    j = i;
+                    temp = array[i];
+                    while ((j >= inc) && (array[j - inc] > temp))
+                    {
+                        array[j] = array[j - inc];
+                        j = j - inc;
+                    }
+                    array[j] = temp;
+                }
+                if (inc / 2 != 0)
+                    inc = inc / 2;
+                else if (inc == 1)
+                    inc = 0;
+                else
+                    inc = 1;
+            }
+        }
+
+        class Node
+        {
+            public int Data;
+            public Node Left;
+            public Node Right;
+
+            public Node(int data)
+            {
+                Data = data;
+                Left = null;
+                Right = null;
+            }
+        }
+
+        class BinarySearchTree
+        {
+            public Node Root;
+
+            public BinarySearchTree()
+            {
+                Root = null;
+            }
+
+            public void Insert(int data)
+            {
+                Root = InsertRec(Root, data);
+            }
+
+            private Node InsertRec(Node root, int data)
+            {
+                if (root == null)
+                {
+                    root = new Node(data);
+                    return root;
+                }
+
+                if (data < root.Data)
+                    root.Left = InsertRec(root.Left, data);
+                else if (data > root.Data)
+                    root.Right = InsertRec(root.Right, data);
+
+                return root;
+            }
+
+
+            public void InOrderTraversal(Node root, List<int> result)
+            {
+                if (root != null)
+                {
+                    InOrderTraversal(root.Left, result);
+                    result.Add(root.Data);
+                    InOrderTraversal(root.Right, result);
+                }
+            }
+        }
+
+        public static void TreeSort(int[] array)
+        {
+            BinarySearchTree bst = new BinarySearchTree();
+            foreach (int value in array)
+            {
+                bst.Insert(value);
+            }
+            List<int> sortedList = new List<int>();
+            bst.InOrderTraversal(bst.Root, sortedList);
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = sortedList[i];
+            }
+        }
+
+
     }
 }
