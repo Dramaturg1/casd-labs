@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace sorting
@@ -248,17 +249,17 @@ namespace sorting
         {
             int N = array.Length;
             for (int i = N / 2 - 1; i >= 0; i--)
-                heapify(array, N, i);
+                Heapify(array, N, i);
             for (int i = N - 1; i > 0; i--)
             {
                 int temp = array[0];
                 array[0] = array[i];
                 array[i] = temp;
-                heapify(array, i, 0);
+                Heapify(array, i, 0);
             }
         }
 
-        static void heapify(int[] array, int N, int i)
+        static void Heapify(int[] array, int N, int i)
         {
             int largest = i;
             int l = 2 * i + 1;
@@ -272,7 +273,7 @@ namespace sorting
                 int swap = array[i];
                 array[i] = array[largest];
                 array[largest] = swap;
-                heapify(array, N, largest);
+                Heapify(array, N, largest);
             }
         }
 
@@ -321,7 +322,7 @@ namespace sorting
             }
         }
 
-        static void merge(int[] array, int l, int m, int r)
+        static void Merge(int[] array, int l, int m, int r)
         {
             int n1 = m - l + 1;
             int n2 = r - m;
@@ -370,7 +371,7 @@ namespace sorting
                 int m = l + (r - l) / 2;
                 MergeSort(array, l, m);
                 MergeSort(array, m + 1, r);
-                merge(array, l, m, r);
+                Merge(array, l, m, r);
             }
         }
 
@@ -422,6 +423,80 @@ namespace sorting
                     array[index++] = buckets[i][j];
         }
 
+        public static void RadiaxSort(int[] arr)
+        {
+            int i, j;
+            int[] tmp = new int[arr.Length];
+            for (int shift = 31; shift > -1; --shift)
+            {
+                j = 0;
+                for (i = 0; i < arr.Length; ++i)
+                {
+                    bool move = (arr[i] << shift) >= 0;
+                    if (shift == 0 ? !move : move)
+                        arr[i - j] = arr[i];
+                    else
+                        tmp[j++] = arr[i];
+                }
+                Array.Copy(tmp, 0, arr, arr.Length - j, j);
+            }
+        }
 
+        static void BitSeqSort(int[] arr, int left, int right, bool inv)
+        {
+            if (right - left <= 1) return;
+            int mid = left + (right - left) / 2;
+
+            for (int i = left, j = mid; i < mid && j < right; i++, j++)
+            {
+                if (inv ^ (arr[i] > arr[j]))
+                {
+                    Swap(ref arr[i], ref arr[j]);
+                }
+            }
+
+            BitSeqSort(arr, left, mid, inv);
+            BitSeqSort(arr, mid, right, inv);
+        }
+
+        static void MakeBitonic(int[] arr, int left, int right)
+        {
+            if (right - left <= 1) return;
+            int mid = left + (right - left) / 2;
+
+            MakeBitonic(arr, left, mid);
+            BitSeqSort(arr, left, mid, false);
+            MakeBitonic(arr, mid, right);
+            BitSeqSort(arr, mid, right, true);
+        }
+
+        public static void BitonicSort(int[] arr)
+        {
+            int n = 1;
+            int inf = arr.Max() + 1;
+            int length = arr.Length;
+
+            while (n < length) n *= 2;
+
+            int[] temp = new int[n];
+            Array.Copy(arr, temp, length);
+
+            for (int i = length; i < n; i++)
+            {
+                temp[i] = inf;
+            }
+
+            MakeBitonic(temp, 0, n);
+            BitSeqSort(temp, 0, n, false);
+
+            Array.Copy(temp, arr, length);
+        }
+
+        static void Swap(ref int a, ref int b)
+        {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
     }
 }
