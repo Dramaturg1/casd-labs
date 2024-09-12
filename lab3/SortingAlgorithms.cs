@@ -463,7 +463,6 @@ namespace sorting
         {
             if (right - left <= 1) return;
             int mid = left + (right - left) / 2;
-
             MakeBitonic(arr, left, mid);
             BitSeqSort(arr, left, mid, false);
             MakeBitonic(arr, mid, right);
