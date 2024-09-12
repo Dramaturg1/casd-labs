@@ -175,12 +175,11 @@ namespace Sorting
 
                 if (data < root.Data)
                     root.Left = InsertRec(root.Left, data);
-                else if (data > root.Data)
+                else
                     root.Right = InsertRec(root.Right, data);
 
                 return root;
             }
-
 
             public void InOrderTraversal(Node root, List<int> result)
             {
@@ -210,24 +209,31 @@ namespace Sorting
 
         public static void GnomeSort(int[] array)
         {
+            if (array.Length <= 1)
+            {
+                return;
+            }
+
             int index = 0;
 
             while (index < array.Length)
             {
                 if (index == 0)
+                {
                     index++;
-                if (array[index] >= array[index - 1])
+                }
+                else if (array[index] >= array[index - 1])
+                {
                     index++;
+                }
                 else
                 {
-                    int temp = 0;
-                    temp = array[index];
+                    int temp = array[index];
                     array[index] = array[index - 1];
                     array[index - 1] = temp;
                     index--;
                 }
             }
-            return;
         }
 
         public static void SelectionSort(int[] array)
@@ -281,45 +287,33 @@ namespace Sorting
         {
             if (left < right)
             {
-                int pivot = Partition(array, left, right);
-                if (pivot > 1)
-                {
-                    QuickSort(array, left, pivot - 1);
-                }
-                if (pivot + 1 < right)
-                {
-                    QuickSort(array, pivot + 1, right);
-                }
+                int pivotIndex = Partition(array, left, right);
+                QuickSort(array, left, pivotIndex - 1);
+                QuickSort(array, pivotIndex + 1, right);
             }
         }
 
         static int Partition(int[] array, int left, int right)
         {
+            int pivot = array[right];
+            int i = left - 1;
 
-            int pivot = array[left];
-            while (true)
+            for (int j = left; j < right; j++)
             {
-                while (array[left] < pivot)
+                if (array[j] <= pivot)
                 {
-                    left++;
-                }
-                while (array[right] > pivot)
-                {
-                    right--;
-                }
-                if (left < right)
-                {
-                    if (array[left] == array[right]) return right;
-
-                    int temp = array[left];
-                    array[left] = array[right];
-                    array[right] = temp;
-                }
-                else
-                {
-                    return right;
+                    i++;
+                    int temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
                 }
             }
+
+            int temp1 = array[i + 1];
+            array[i + 1] = array[right];
+            array[right] = temp1;
+
+            return i + 1;
         }
 
         static void Merge(int[] array, int l, int m, int r)
@@ -375,9 +369,40 @@ namespace Sorting
             }
         }
 
-        public static void CountingSort(int[] array, int k)
+        public static void CountingSort(int[] array)
         {
-            var count = new int[k+1];
+            if (array.Length == 0) return;
+
+            int FindMaxValue(int[] arr)
+            {
+                if (arr.Length == 0)
+                {
+                    throw new ArgumentException("Array is empty.");
+                }
+
+                int maxValue = arr[0];
+                for (int i = 1; i < arr.Length; i++)
+                {
+                    if (arr[i] > maxValue)
+                    {
+                        maxValue = arr[i];
+                    }
+                }
+
+                return maxValue;
+            }
+
+            int k;
+            try
+            {
+                k = FindMaxValue(array);
+            }
+            catch (ArgumentException ex)
+            {
+                return;
+            }
+
+            var count = new int[k + 1];
             for (var i = 0; i < array.Length; i++)
             {
                 count[array[i]]++;
@@ -394,30 +419,16 @@ namespace Sorting
             }
         }
 
-        public static int FindMaxValue(int[] array)
-        {
-            if (array.Length == 0)
-            {
-                throw new ArgumentException("Array is empty.");
-            }
-
-            int maxValue = array[0];
-            for (int i = 1; i < array.Length; i++)
-            {
-                if (array[i] > maxValue)
-                {
-                    maxValue = array[i];
-                }
-            }
-
-            return maxValue;
-        }
-
         public static void BucketSort(int[] array, int bucketCount)
         {
+            if (array.Length <= 1)
+            {
+                return;
+            }
+
             var buckets = new List<int>[bucketCount];
             for (int i = 0; i < bucketCount; i++)
-                buckets[i] = new List<int>(array.Length / bucketCount);
+                buckets[i] = new List<int>();
 
             var min = double.MaxValue;
             var max = -double.MaxValue;
@@ -430,16 +441,28 @@ namespace Sorting
 
             for (int i = 0; i < array.Length; i++)
             {
-                var idx = Math.Min(bucketCount - 1, (int)(bucketCount * (array[i] - min) / (max - min)));
+                int idx;
+                if (max == min)
+                {
+                    idx = 0;
+                }
+                else
+                {
+                    idx = Math.Min(bucketCount - 1, (int)(bucketCount * (array[i] - min) / (max - min)));
+                }
                 buckets[idx].Add(array[i]);
             }
 
-            Parallel.For(0, bucketCount, i => buckets[i].Sort());
-
             var index = 0;
             for (var i = 0; i < bucketCount; i++)
+            {
+                buckets[i].Sort();
+
                 for (var j = 0; j < buckets[i].Count; j++)
+                {
                     array[index++] = buckets[i][j];
+                }
+            }
         }
 
         public static void RadiaxSort(int[] arr)

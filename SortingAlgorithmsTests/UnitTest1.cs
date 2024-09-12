@@ -554,7 +554,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 8, 7, 6, 5, 4, 3, 2, 1 };
             int[] expected = { 1, 2, 3, 4, 5, 6, 7, 8 };
-            Sorting.SortingAlgorithms.CountingSort(array, Sorting.SortingAlgorithms.FindMaxValue(array) + 1);
+            Sorting.SortingAlgorithms.CountingSort(array);
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -563,7 +563,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { };
             int[] expected = { };
-            SortingAlgorithms.CountingSort(array, Sorting.SortingAlgorithms.FindMaxValue(array) + 1);
+            SortingAlgorithms.CountingSort(array);
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -572,7 +572,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1 };
             int[] expected = { 1 };
-            SortingAlgorithms.CountingSort(array, Sorting.SortingAlgorithms.FindMaxValue(array) + 1);
+            SortingAlgorithms.CountingSort(array);
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -581,7 +581,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 5, 5, 4, 3, 2, 2, 1, 1 };
             int[] expected = { 1, 1, 2, 2, 3, 4, 5, 5 };
-            SortingAlgorithms.CountingSort(array, Sorting.SortingAlgorithms.FindMaxValue(array) + 1);
+            SortingAlgorithms.CountingSort(array);
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -590,7 +590,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1, 2, 3, 4, 5 };
             int[] expected = { 1, 2, 3, 4, 5 };
-            SortingAlgorithms.CountingSort(array, Sorting.SortingAlgorithms.FindMaxValue(array) + 1);
+            SortingAlgorithms.CountingSort(array);
             CollectionAssert.AreEqual(expected, array);
         }
 
