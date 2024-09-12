@@ -208,7 +208,7 @@ namespace Sorting
             }
         }
 
-        static void GnomeSort(int[] array)
+        public static void GnomeSort(int[] array)
         {
             int index = 0;
 
@@ -394,6 +394,25 @@ namespace Sorting
             }
         }
 
+        public static int FindMaxValue(int[] array)
+        {
+            if (array.Length == 0)
+            {
+                throw new ArgumentException("Array is empty.");
+            }
+
+            int maxValue = array[0];
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i] > maxValue)
+                {
+                    maxValue = array[i];
+                }
+            }
+
+            return maxValue;
+        }
+
         public static void BucketSort(int[] array, int bucketCount)
         {
             var buckets = new List<int>[bucketCount];
@@ -472,6 +491,7 @@ namespace Sorting
 
         public static void BitonicSort(int[] arr)
         {
+            if (arr.Length == 0) return;
             int n = 1;
             int inf = arr.Max() + 1;
             int length = arr.Length;
