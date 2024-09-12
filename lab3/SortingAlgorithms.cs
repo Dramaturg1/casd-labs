@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace sorting
+namespace Sorting
 {
-    internal class SortingAlgorithms
+    public class SortingAlgorithms
     {
         public static void BubbleSort(int[] array)
         {
             int temp;
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length-1; i++)
             {
-                for (int j = 0; j < array.Length; j++)
+                for (int j = 0; j < array.Length-i-1; j++)
                 {
                     if (array[j] > array[j + 1])
                     {
