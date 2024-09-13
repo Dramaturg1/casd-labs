@@ -1,6 +1,6 @@
 ﻿namespace lab3
 {
-    partial class Form1
+    partial class SortedArray
     {
         /// <summary>
         /// Required designer variable.
@@ -37,4 +37,3 @@
         #endregion
     }
 }
-
