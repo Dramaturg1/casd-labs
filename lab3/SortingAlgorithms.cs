@@ -283,13 +283,16 @@ namespace sorting
             }
         }
 
-        public static void QuickSort(int[] array, int left, int right)
+        public static void QuickSort(Tuple<int[], int, int>param)
         {
+            int[] array = param.Item1;
+            int left = param.Item2;
+            int right = param.Item3;
             if (left < right)
             {
                 int pivotIndex = Partition(array, left, right);
-                QuickSort(array, left, pivotIndex - 1);
-                QuickSort(array, pivotIndex + 1, right);
+                QuickSort(Tuple.Create(array, left, pivotIndex - 1));
+                QuickSort(Tuple.Create(array, pivotIndex + 1, right));
             }
         }
 
@@ -358,13 +361,16 @@ namespace sorting
             }
         }
 
-        public static void MergeSort(int[] array, int l, int r)
+        public static void MergeSort(Tuple<int[], int, int>param)
         {
+            int[] array = param.Item1;
+            int l = param.Item2;
+            int r = param.Item3;
             if (l < r)
             {
                 int m = l + (r - l) / 2;
-                MergeSort(array, l, m);
-                MergeSort(array, m + 1, r);
+                MergeSort(Tuple.Create(array, l, m));
+                MergeSort(Tuple.Create(array, m + 1, r));
                 Merge(array, l, m, r);
             }
         }
@@ -419,8 +425,10 @@ namespace sorting
             }
         }
 
-        public static void BucketSort(int[] array, int bucketCount)
+        public static void BucketSort(Tuple<int[], int>param)
         {
+            int[] array = param.Item1;
+            int bucketCount = param.Item2;
             if (array.Length <= 1)
             {
                 return;

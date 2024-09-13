@@ -464,7 +464,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 8, 7, 6, 5, 4, 3, 2, 1 };
             int[] expected = { 1, 2, 3, 4, 5, 6, 7, 8 };
-            sorting.SortingAlgorithms.QuickSort(array, 0, array.Length-1);
+            sorting.SortingAlgorithms.QuickSort(Tuple.Create(array, 0, array.Length-1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -473,7 +473,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { };
             int[] expected = { };
-            SortingAlgorithms.QuickSort(array, 0, array.Length - 1);
+            SortingAlgorithms.QuickSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -482,7 +482,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1 };
             int[] expected = { 1 };
-            SortingAlgorithms.QuickSort(array, 0, array.Length - 1);
+            SortingAlgorithms.QuickSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -491,7 +491,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 5, 5, 4, 3, 2, 2, 1, 1 };
             int[] expected = { 1, 1, 2, 2, 3, 4, 5, 5 };
-            SortingAlgorithms.QuickSort(array, 0, array.Length - 1);
+            SortingAlgorithms.QuickSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -500,7 +500,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1, 2, 3, 4, 5 };
             int[] expected = { 1, 2, 3, 4, 5 };
-            SortingAlgorithms.QuickSort(array, 0, array.Length - 1);
+            SortingAlgorithms.QuickSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -509,7 +509,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 8, 7, 6, 5, 4, 3, 2, 1 };
             int[] expected = { 1, 2, 3, 4, 5, 6, 7, 8 };
-            sorting.SortingAlgorithms.MergeSort(array, 0, array.Length - 1);
+            sorting.SortingAlgorithms.MergeSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -518,7 +518,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { };
             int[] expected = { };
-            SortingAlgorithms.MergeSort(array, 0, array.Length - 1);
+            SortingAlgorithms.MergeSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -527,7 +527,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1 };
             int[] expected = { 1 };
-            SortingAlgorithms.MergeSort(array, 0, array.Length - 1);
+            SortingAlgorithms.MergeSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -536,7 +536,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 5, 5, 4, 3, 2, 2, 1, 1 };
             int[] expected = { 1, 1, 2, 2, 3, 4, 5, 5 };
-            SortingAlgorithms.MergeSort(array, 0, array.Length - 1);
+            SortingAlgorithms.MergeSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -545,7 +545,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1, 2, 3, 4, 5 };
             int[] expected = { 1, 2, 3, 4, 5 };
-            SortingAlgorithms.MergeSort(array, 0, array.Length - 1);
+            SortingAlgorithms.MergeSort(Tuple.Create(array, 0, array.Length - 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -599,7 +599,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 8, 7, 6, 5, 4, 3, 2, 1 };
             int[] expected = { 1, 2, 3, 4, 5, 6, 7, 8 };
-            sorting.SortingAlgorithms.BucketSort(array, array.Length+1);
+            sorting.SortingAlgorithms.BucketSort(Tuple.Create(array, array.Length+1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -608,7 +608,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { };
             int[] expected = { };
-            SortingAlgorithms.BucketSort(array, array.Length + 1);
+            SortingAlgorithms.BucketSort(Tuple.Create(array, array.Length + 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -617,7 +617,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1 };
             int[] expected = { 1 };
-            SortingAlgorithms.BucketSort(array, array.Length + 1);
+            SortingAlgorithms.BucketSort(Tuple.Create(array, array.Length + 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -626,7 +626,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 5, 5, 4, 3, 2, 2, 1, 1 };
             int[] expected = { 1, 1, 2, 2, 3, 4, 5, 5 };
-            SortingAlgorithms.BucketSort(array, array.Length + 1);
+            SortingAlgorithms.BucketSort(Tuple.Create(array, array.Length + 1));
             CollectionAssert.AreEqual(expected, array);
         }
 
@@ -635,7 +635,7 @@ namespace SortingAlgorithmsTests
         {
             int[] array = { 1, 2, 3, 4, 5 };
             int[] expected = { 1, 2, 3, 4, 5 };
-            SortingAlgorithms.BucketSort(array, array.Length + 1);
+            SortingAlgorithms.BucketSort(Tuple.Create(array, array.Length + 1));
             CollectionAssert.AreEqual(expected, array);
         }
 

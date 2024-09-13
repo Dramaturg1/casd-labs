@@ -42,9 +42,9 @@ namespace lab3
                 param => sorting.SortingAlgorithms.SelectionSort((int[])param),
                 param => sorting.SortingAlgorithms.HeapSort((int[])param),
                 param => sorting.SortingAlgorithms.QuickSort(((Tuple<int[], int, int>)param)),
-                param => sorting.SortingAlgorithms.MergeSort((())),
+                param => sorting.SortingAlgorithms.MergeSort(((Tuple<int[], int, int>)param)),
                 param => sorting.SortingAlgorithms.CountingSort((int[])param),
-                param => sorting.SortingAlgorithms.BucketSort((())),
+                param => sorting.SortingAlgorithms.BucketSort(((Tuple<int[], int>)param)),
                 param => sorting.SortingAlgorithms.RadiaxSort((int[])param),
                 param => sorting.SortingAlgorithms.BitonicSort((int[])param)
             };
