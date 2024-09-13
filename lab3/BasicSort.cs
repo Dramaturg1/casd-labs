@@ -18,30 +18,57 @@ namespace lab3
             InitializeComponent();
         }
 
-        delegate void SortDelegate(int[] array);
+        delegate void SortDelegate(object parameters);
 
-        private long RandMod10()
+        private long[] RandMod10()
         {
             Stopwatch timer = new Stopwatch();
             Random rand = new Random();
-            long elapsedMS = 0;
+            long[] elapsedMS = new long[15];
+            foreach (long i in elapsedMS)
+            {
+                elapsedMS[i] = 0;
+            };
+
             List<SortDelegate> sortAlgs = new List<SortDelegate>
             {
-                sorting.SortingAlgorithms.BubbleSort, sorting.SortingAlgorithms.
-            }
-            for (int i = 0; i < 20; i++)
+                param => sorting.SortingAlgorithms.BubbleSort((int[])param),
+                param => sorting.SortingAlgorithms.ShakerSort((int[])param),
+                param => sorting.SortingAlgorithms.CombSort((int[])param),
+                param => sorting.SortingAlgorithms.InsertionSort((int[])param),
+                param => sorting.SortingAlgorithms.ShellSort((int[])param),
+                param => sorting.SortingAlgorithms.TreeSort((int[])param),
+                param => sorting.SortingAlgorithms.GnomeSort((int[])param),
+                param => sorting.SortingAlgorithms.SelectionSort((int[])param),
+                param => sorting.SortingAlgorithms.HeapSort((int[])param),
+                param => sorting.SortingAlgorithms.QuickSort(((Tuple<int[], int, int>)param)),
+                param => sorting.SortingAlgorithms.MergeSort((())),
+                param => sorting.SortingAlgorithms.CountingSort((int[])param),
+                param => sorting.SortingAlgorithms.BucketSort((())),
+                param => sorting.SortingAlgorithms.RadiaxSort((int[])param),
+                param => sorting.SortingAlgorithms.BitonicSort((int[])param)
+            };
+            for (int i = 0; i < 15; i++)
             {
-                int[] arr = new int[100000];
-                for (int j = 0; j < arr.Length; j++)
+                for (int j = 0; j < 20; j++)
                 {
-                    arr[i] = rand.Next(-9, 9);
+                    int[] array = new int[100000];
+                    foreach (int k in array)
+                    {
+                        array[k] = rand.Next(-9, 10);
+                    }
+                    timer.Start();
+                    sortAlgs[i](array);
+                    timer.Stop();
+                    elapsedMS[i] = timer.ElapsedMilliseconds;
                 }
-                timer.Start();
-                sorting.SortingAlgorithms.BubbleSort(arr);
-                timer.Stop();
-                elapsedMS += timer.ElapsedMilliseconds;
+
             }
-            return elapsedMS /= 20;
+            foreach (long i in elapsedMS)
+            {
+                elapsedMS[i] /= 20;
+            }
+            return elapsedMS;
         }
     }
 }
