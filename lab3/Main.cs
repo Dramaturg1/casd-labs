@@ -62,20 +62,20 @@ namespace lab3
                 elapsedMS = Group1Test1();
 
             }
-            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test2))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test3))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test4))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test1))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test2))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test3))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test4))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test1))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))   { int a; }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test2))   { }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test3))   { }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test4))   { }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test1))   { }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test2))   { }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test3))   { }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test4))   { }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test1))   { }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))   { }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))   { }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))   { }
 
         }
-
+        /*
         public long[,] Group1Test1()
         {
             Random rand = new Random();
@@ -83,29 +83,42 @@ namespace lab3
             long[,] elapsedMS = new long[5,5];
             for (int i = 0; i < 5; i++)
             {
-                int[] array = new int[100000];
-                for (int j = 0; j < array.Length; j++)
+                int[] baseArray = new int[100000];
+                for (int j = 0; j < baseArray.Length; j++)
                 {
                     if (i == 0)
                     {
-                        array[j] = rand.Next(-9, 10);
+                        baseArray[j] = rand.Next(-9, 10);
                     }
                     if (i == 1)
                     {
-                        array[j] = rand.Next(-999, 1000);
+                        baseArray[j] = rand.Next(-999, 1000);
                     }
                     if (i == 2)
                     {
-                        array[j] = rand.Next(-99999, )
+                        baseArray[j] = rand.Next(-99999, 100000);
                     }
                     if (i == 3)
                     {
-
+                        baseArray[j] = rand.Next(-9999999, 10000000);
                     }
                     if (i == 4)
                     {
-
+                        baseArray[j] = rand.Next(-999999999, 1000000000);
                     }
+                }
+                for (int j = 0; j < 5; j++)
+                {
+                    timer.Start();
+                    for (int k = 0; k < 20; k++)
+                    {
+                        int[] array = (int[])baseArray.Clone();
+                        sortAlgs[j](array);
+                    }
+                    timer.Stop();
+                    elapsedMS[i, j] += timer.ElapsedMilliseconds;
+                    timer.Reset();
+
                 }
             }
             for (int i = 0; i < 5; i++)
@@ -115,6 +128,48 @@ namespace lab3
                     elapsedMS[i, j] /= 20;
                 }
             }
+            return elapsedMS;
+        }
+        */
+
+        public long[,] Group1Test1()
+        {
+            Random rand = new Random();
+            Stopwatch timer = new Stopwatch();
+            long[,] elapsedMS = new long[5, 5];
+
+            int[][] testData = new int[5][];
+            testData[0] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-9, 10)).ToArray();
+            testData[1] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-999, 1000)).ToArray();
+            testData[2] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-99999, 100000)).ToArray();
+            testData[3] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-9999999, 10000000)).ToArray();
+            testData[4] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-999999999, 1000000000)).ToArray();
+
+            int[] buffer = new int[100000];
+
+            Parallel.For(0, 5, i =>
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    var startTime = DateTime.Now;
+                    for (int k = 0; k < 20; k++)
+                    {
+                        Array.Copy(testData[i], buffer, 100000);
+                        sortAlgs[j](buffer);
+                    }
+                    var elapsed = DateTime.Now - startTime;
+                    elapsedMS[i, j] = (long)elapsed.TotalMilliseconds;
+                }
+            });
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    elapsedMS[i, j] /= 20;
+                }
+            }
+
             return elapsedMS;
         }
 
