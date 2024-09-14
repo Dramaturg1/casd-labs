@@ -65,8 +65,9 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(277, 23);
             this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
+            this.button1.Text = "Отрисовать график\r\n";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Main
             // 
@@ -77,7 +78,7 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Name = "Main";
-            this.Text = "Form1";
+            this.Text = "Main";
             this.ResumeLayout(false);
 
         }

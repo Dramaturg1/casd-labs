@@ -40,40 +40,87 @@ namespace lab3
                 sorting.SortingAlgorithms.RadiaxSort, //14
             };
 
-        private long[] RandMod10()
+        private void button1_Click(object sender, EventArgs e)
         {
-            Stopwatch timer = new Stopwatch();
-            Random rand = new Random();
-            long[] elapsedMS = new long[15];
-            foreach (long i in elapsedMS)
+            string gr1 = "Группа №1 (BubbleSort, InsertionSort, SelectionSort, ShakerSort, GnomeSort)";
+            string gr2 = "Группа №2 (BitonicSort, ShellSort, TreeSort)";
+            string gr3 = "Группа №3 (CombSort, HeapSort, QuickSort, MergeSort, CountingSort, BucketSort, RadiaxSort)";
+            string test1 = "Массивы случайных чисел";
+            string test2 = "Массивы с отсортированными подмассивами";
+            string test3 = "Отсортированные массивы с перестановками";
+            string test4 = "Массивы с повторениями; массивы, остортированные прямо и обратно";
+            if (comboBox1.SelectedItem == null || comboBox2.SelectedItem == null)
             {
-                elapsedMS[i] = 0;
-            };
-
-
-
-            for (int i = 0; i < 15; i++)
+                MessageBox.Show("Не были выбраны тестовые данные");
+                return;
+            }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test1))
             {
-                for (int j = 0; j < 20; j++)
-                {
-                    int[] array = new int[100000];
-                    for (int k = 0; k < array.Length; k++)
-                    {
-                        array[k] = rand.Next(-9, 9);
-                    }
-                    timer.Start();
-                    sortAlgs[i](array);
-                    timer.Stop();
-                    elapsedMS[i] += timer.ElapsedMilliseconds;
-                    timer.Reset();
-                }
+                Form graph = new Graph();
+                graph.Show();
+                long[,] elapsedMS = new long[5, 5];
+                elapsedMS = Group1Test1();
 
             }
-            foreach (int i in elapsedMS)
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test2))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test3))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test4))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test1))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test2))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test3))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test4))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test1))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))   { int a; }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))   { int a; }
+
+        }
+
+        public long[,] Group1Test1()
+        {
+            Random rand = new Random();
+            Stopwatch timer = new Stopwatch();
+            long[,] elapsedMS = new long[5,5];
+            for (int i = 0; i < 5; i++)
             {
-                elapsedMS[i] /= 20;
+                int[] array = new int[100000];
+                for (int j = 0; j < array.Length; j++)
+                {
+                    if (i == 0)
+                    {
+                        array[j] = rand.Next(-9, 10);
+                    }
+                    if (i == 1)
+                    {
+                        array[j] = rand.Next(-999, 1000);
+                    }
+                    if (i == 2)
+                    {
+                        array[j] = rand.Next(-99999, )
+                    }
+                    if (i == 3)
+                    {
+
+                    }
+                    if (i == 4)
+                    {
+
+                    }
+                }
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    elapsedMS[i, j] /= 20;
+                }
             }
             return elapsedMS;
+        }
+
+        public void DrawGraph()
+        {
+
         }
     }
 }
