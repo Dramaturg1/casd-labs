@@ -50,35 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Randomizer.cs" />
-    <Compile Include="Duplicates.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Duplicates.Designer.cs">
-      <DependentUpon>Duplicates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SortedArray.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SortedArray.Designer.cs">
-      <DependentUpon>SortedArray.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Subarrays.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Subarrays.Designer.cs">
-      <DependentUpon>Subarrays.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BasicSort.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BasicSort.Designer.cs">
-      <DependentUpon>BasicSort.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
