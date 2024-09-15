@@ -18,7 +18,6 @@ namespace lab3
             InitializeComponent();
         }
 
-
         public delegate void SortDelegate(int[] array);
 
         List<SortDelegate> sortAlgs = new List<SortDelegate>
@@ -58,9 +57,6 @@ namespace lab3
             {
                 Form graph = new Graph();
                 graph.Show();
-                long[,] elapsedMS = new long[5, 5];
-                elapsedMS = Group1Test1();
-
             }
             if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test2))   { }
             if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test3))   { }
@@ -73,109 +69,57 @@ namespace lab3
             if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))   { }
             if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))   { }
             if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))   { }
-
         }
-        /*
-        public long[,] Group1Test1()
-        {
-            Random rand = new Random();
-            Stopwatch timer = new Stopwatch();
-            long[,] elapsedMS = new long[5,5];
-            for (int i = 0; i < 5; i++)
-            {
-                int[] baseArray = new int[100000];
-                for (int j = 0; j < baseArray.Length; j++)
-                {
-                    if (i == 0)
-                    {
-                        baseArray[j] = rand.Next(-9, 10);
-                    }
-                    if (i == 1)
-                    {
-                        baseArray[j] = rand.Next(-999, 1000);
-                    }
-                    if (i == 2)
-                    {
-                        baseArray[j] = rand.Next(-99999, 100000);
-                    }
-                    if (i == 3)
-                    {
-                        baseArray[j] = rand.Next(-9999999, 10000000);
-                    }
-                    if (i == 4)
-                    {
-                        baseArray[j] = rand.Next(-999999999, 1000000000);
-                    }
-                }
-                for (int j = 0; j < 5; j++)
-                {
-                    timer.Start();
-                    for (int k = 0; k < 20; k++)
-                    {
-                        int[] array = (int[])baseArray.Clone();
-                        sortAlgs[j](array);
-                    }
-                    timer.Stop();
-                    elapsedMS[i, j] += timer.ElapsedMilliseconds;
-                    timer.Reset();
-
-                }
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    elapsedMS[i, j] /= 20;
-                }
-            }
-            return elapsedMS;
-        }
-        */
 
         public long[,] Group1Test1()
         {
-            Random rand = new Random();
             Stopwatch timer = new Stopwatch();
-            long[,] elapsedMS = new long[5, 5];
-
-            int[][] testData = new int[5][];
-            testData[0] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-9, 10)).ToArray();
-            testData[1] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-999, 1000)).ToArray();
-            testData[2] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-99999, 100000)).ToArray();
-            testData[3] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-9999999, 10000000)).ToArray();
-            testData[4] = Enumerable.Range(0, 100000).Select(_ => rand.Next(-999999999, 1000000000)).ToArray();
-
-            int[] buffer = new int[100000];
+            long[,] elapsedMS = new long[5, 4];
+            int[][] baseArray = ArrayGeneration();
 
             Parallel.For(0, 5, i =>
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 4; j++)
                 {
-                    var startTime = DateTime.Now;
+                    long totalElapsed = 0;
                     for (int k = 0; k < 20; k++)
                     {
-                        Array.Copy(testData[i], buffer, 100000);
-                        sortAlgs[j](buffer);
+                        int[] array = (int[])baseArray[j].Clone();
+                        timer.Restart();
+                        sortAlgs[i](array);
+                        timer.Stop();
+                        totalElapsed += timer.ElapsedMilliseconds;
                     }
-                    var elapsed = DateTime.Now - startTime;
-                    elapsedMS[i, j] = (long)elapsed.TotalMilliseconds;
+
+                    elapsedMS[i, j] = totalElapsed / 20;
                 }
             });
-
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    elapsedMS[i, j] /= 20;
-                }
-            }
 
             return elapsedMS;
         }
 
-        public void DrawGraph()
+        public static int[][] ArrayGeneration()
         {
+            int[][] array = new int[4][];
+            array[0] = new int[10];
+            array[1] = new int[100];
+            array[2] = new int[1000];
+            array[3] = new int[10000];
+            RandomElemGeneration(array, 1000);
+            return array;
+        }
 
+        public static void RandomElemGeneration(int[][] array, int module)
+        {
+            Random rand = new Random();
+            
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; j < array[i].Length; j++)
+                {
+                    array[i][j] = rand.Next(-module+1, module+1);
+                }
+            }
         }
     }
 }

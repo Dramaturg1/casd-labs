@@ -55,7 +55,6 @@
     <Compile Include="Graph.Designer.cs">
       <DependentUpon>Graph.cs</DependentUpon>
     </Compile>
-    <Compile Include="Randomizer.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
