@@ -386,11 +386,6 @@ namespace sorting
 
             int FindMaxValue(int[] arr)
             {
-                if (arr.Length == 0)
-                {
-                    throw new ArgumentException("Array is empty.");
-                }
-
                 int maxValue = arr[0];
                 for (int i = 1; i < arr.Length; i++)
                 {
@@ -399,24 +394,32 @@ namespace sorting
                         maxValue = arr[i];
                     }
                 }
-
                 return maxValue;
             }
 
-            int k;
-            try
+            int FindMinValue(int[] arr)
             {
-                k = FindMaxValue(array);
-            }
-            catch (ArgumentException ex)
-            {
-                return;
+                int minValue = arr[0];
+                for (int i = 1; i < arr.Length; i++)
+                {
+                    if (arr[i] < minValue)
+                    {
+                        minValue = arr[i];
+                    }
+                }
+                return minValue;
             }
 
-            var count = new int[k + 1];
+            int max = FindMaxValue(array);
+            int min = FindMinValue(array);
+
+            int range = max - min + 1;
+
+            var count = new int[range];
+
             for (var i = 0; i < array.Length; i++)
             {
-                count[array[i]]++;
+                count[array[i] - min]++;
             }
 
             var index = 0;
@@ -424,7 +427,7 @@ namespace sorting
             {
                 for (var j = 0; j < count[i]; j++)
                 {
-                    array[index] = i;
+                    array[index] = i + min;
                     index++;
                 }
             }

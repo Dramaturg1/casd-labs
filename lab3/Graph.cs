@@ -12,15 +12,17 @@ namespace lab3
         private LineItem[] curves;
         private PointPairList[] points;
         public long[,] elapsedMS;
+        public int[] arraySizes;
 
-        public Graph()
+        public Graph(int value)
         {
             InitializeComponent();
-            InitializeGraph();
-            PlotGraph();
+            arraySizes = new int[GetSize(value)];
+            InitializeGraph(value);
+            PlotGraph(value);
         }
 
-        public void InitializeGraph()
+        public void InitializeGraph(int testNumber)
         {
             graphControl = new ZedGraphControl
             {
@@ -32,18 +34,50 @@ namespace lab3
             pane.XAxis.Title.Text = "Размер массива";
             pane.YAxis.Title.Text = "Прошедшее время (мс)";
 
+            string[] sortNames = { "BubbleSort", "InsertionSort", "SelectionSort", "ShakerSort", "GnomeSort", "BitonicSort", "ShellSort", "TreeSort", "CombSort", "HeapSort", "QuickSort", "MergeSort", "CountingSort", "BucketSort", "RadiaxSort"};
+            int startIndex = GetIndex(testNumber).Item1;
+            int endIndex = GetIndex(testNumber).Item2;
+
             Main mainForm = new Main();
-            elapsedMS = mainForm.Group1Test1();
+            if (testNumber >= 1 && testNumber < 5)
+            {
+                elapsedMS = mainForm.Test(0, 5, 10000, testNumber);
+                arraySizes[0] = 10;
+                arraySizes[1] = 100;
+                arraySizes[2] = 1000;
+                arraySizes[3] = 10000;
+                points = new PointPairList[5];
+                curves = new LineItem[5];
+            }
+            else if (testNumber >= 5 && testNumber < 9)
+            {
+                elapsedMS = mainForm.Test(5, 8, 100000, testNumber);
+                arraySizes[0] = 10;
+                arraySizes[1] = 100;
+                arraySizes[2] = 1000;
+                arraySizes[3] = 10000;
+                arraySizes[4] = 100000;
+                points = new PointPairList[3];
+                curves = new LineItem[3];
 
-            int[] arraySizes = { 10, 100, 1000, 10000 };
-            points = new PointPairList[5];
-            curves = new LineItem[5];
-            string[] sortNames = { "BubbleSort", "InsertionSort", "SelectionSort", "ShakerSort", "GnomeSort" };
+            }
+            else if (testNumber >=9 && testNumber < 13)
+            {
+                elapsedMS = mainForm.Test(8, 15, 1000000, testNumber);
+                arraySizes[0] = 10;
+                arraySizes[1] = 100;
+                arraySizes[2] = 1000;
+                arraySizes[3] = 10000;
+                arraySizes[4] = 100000;
+                arraySizes[5] = 1000000;
+                points = new PointPairList[7];
+                curves = new LineItem[7];
+            }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0, j = startIndex; i < CurveNumber(testNumber); i++, j++)
             {
                 points[i] = new PointPairList();
-                curves[i] = pane.AddCurve(sortNames[i], points[i], GetColor(i), SymbolType.None);
+                curves[i] = pane.AddCurve(sortNames[j], points[i], GetColor(i), SymbolType.None);
             }
 
             pane.XAxis.Scale.Min = arraySizes[0] - 10;
@@ -51,8 +85,21 @@ namespace lab3
             pane.YAxis.Scale.Min = MinMaxValue(elapsedMS).Item1;
             pane.YAxis.Scale.Max = MinMaxValue(elapsedMS).Item2;
 
-            pane.XAxis.Scale.MajorStep = 1000;
-            pane.XAxis.Scale.MinorStep = 100;
+            if (GetSize(testNumber) == 4)
+            {
+                pane.XAxis.Scale.MajorStep = 1000;
+                pane.XAxis.Scale.MinorStep = 100;
+            }
+            if (GetSize(testNumber) == 5)
+            {
+                pane.XAxis.Scale.MajorStep = 10000;
+                pane.XAxis.Scale.MinorStep = 1000;
+            }
+            if (GetSize(testNumber) == 6)
+            {
+                pane.XAxis.Scale.MajorStep = 100000;
+                pane.XAxis.Scale.MinorStep = 10000;
+            }
 
             graphControl.IsEnableVPan = true;
             graphControl.IsEnableVZoom = true;
@@ -60,13 +107,11 @@ namespace lab3
             graphControl.IsEnableHZoom = true;
         }
 
-        private void PlotGraph()
+        private void PlotGraph(int value)
         {
-            int[] arraySizes = { 10, 100, 1000, 10000 };
-
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < CurveNumber(value); i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < arraySizes.Length; j++)
                 {
                     points[i].Add(arraySizes[j], elapsedMS[i, j]);
                 }
@@ -85,6 +130,9 @@ namespace lab3
                 case 2: return System.Drawing.Color.Green;
                 case 3: return System.Drawing.Color.Purple;
                 case 4: return System.Drawing.Color.Orange;
+                case 5: return System.Drawing.Color.Magenta;
+                case 6: return System.Drawing.Color.Yellow;
+                case 7: return System.Drawing.Color.Cyan;
                 default: return System.Drawing.Color.Black;
             }
         }
@@ -110,6 +158,57 @@ namespace lab3
             }
 
             return Tuple.Create(min, max);
+        }
+
+        public int GetSize(int value)
+        {
+            if (value >= 1 && value < 5)
+            {
+                return 4;
+            }
+            if (value >= 5 && value < 8)
+            {
+                return 5;
+            }
+            if (value >= 8 && value < 13)
+            {
+                return 6;
+            }
+            return 0;
+        }
+
+        public Tuple<int, int> GetIndex(int value)
+        {
+            if (value >= 1 && value < 5)
+            {
+                return Tuple.Create<int, int>(0, 5);
+            }
+            if (value >= 5 && value < 8)
+            {
+                return Tuple.Create<int, int>(5, 8);
+            }
+            if (value >= 8 && value < 13)
+            {
+                return Tuple.Create<int, int>(8, 15);
+            }
+            return null;
+        }
+
+        public int CurveNumber(int value)
+        {
+            if (value >= 1 && value < 5)
+            {
+                return 5;
+            }
+            if (value >= 5 && value < 8)
+            {
+                return 3;
+            }
+            if (value >= 8 && value < 13)
+            {
+                return 7;
+            }
+            return 0;
         }
     }
 }

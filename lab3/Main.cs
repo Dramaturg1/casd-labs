@@ -55,70 +55,170 @@ namespace lab3
             }
             if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test1))
             {
-                Form graph = new Graph();
+                Form graph = new Graph(1);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test2))   { }
-            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test3))   { }
-            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test4))   { }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test1))   { }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test2))   { }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test3))   { }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test4))   { }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test1))   { }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))   { }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))   { }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))   { }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test2))  
+            {
+                Form graph = new Graph(2);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test3))
+            {
+                Form graph = new Graph(3);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test4))  
+            {
+                Form graph = new Graph(4);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test1))  
+            {
+                Form graph = new Graph(5);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test2)) 
+            {
+                Form graph = new Graph(6);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test3)) 
+            {
+                Form graph = new Graph(7);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test4))  
+            {
+                Form graph = new Graph(8);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test1)) 
+            {
+                Form graph = new Graph(9);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))  
+            {
+                Form graph = new Graph(10);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))  
+            {
+                Form graph = new Graph(11);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))
+            {
+                Form graph = new Graph(12);
+                graph.Show();
+            }
         }
 
-        public long[,] Group1Test1()
+        public long[,] Test(int startInd, int endInd, int size, int testNumber)
         {
-            Stopwatch timer = new Stopwatch();
-            long[,] elapsedMS = new long[5, 4];
-            int[][] baseArray = ArrayGeneration();
-
-            Parallel.For(0, 5, i =>
+            int counter = 0;
+            int sizeCopy = size;
+            int sortNumber = endInd - startInd + 1;
+            while (sizeCopy != 1)
             {
-                for (int j = 0; j < 4; j++)
+                counter++;
+                sizeCopy /= 10;
+            }
+            Stopwatch timer = new Stopwatch();
+            long[,] elapsedMS = new long[sortNumber, counter];
+            int[][] baseArray = ArrayGeneration(counter, testNumber);
+
+            Parallel.For(0, sortNumber, idx =>
+            {
+                int sortIndex = startInd + idx;
+                if (sortIndex == 15)
+                {
+                    sortIndex--;
+                }
+                for (int j = 0; j < counter; j++)
                 {
                     long totalElapsed = 0;
                     for (int k = 0; k < 20; k++)
                     {
                         int[] array = (int[])baseArray[j].Clone();
                         timer.Restart();
-                        sortAlgs[i](array);
+                        sortAlgs[sortIndex](array);
                         timer.Stop();
                         totalElapsed += timer.ElapsedMilliseconds;
                     }
 
-                    elapsedMS[i, j] = totalElapsed / 20;
+                    elapsedMS[idx, j] = totalElapsed / 20;
                 }
             });
 
             return elapsedMS;
         }
 
-        public static int[][] ArrayGeneration()
+        public static int[][] ArrayGeneration(int counter, int value)
         {
-            int[][] array = new int[4][];
-            array[0] = new int[10];
-            array[1] = new int[100];
-            array[2] = new int[1000];
-            array[3] = new int[10000];
-            RandomElemGeneration(array, 1000);
+            int[][] array = new int[counter][];
+            for (int i = 0, size = 10; i < counter; i++, size *=10)
+            {
+                array[i] = new int[size];
+            }
+            RandomElemGeneration(array, value);
             return array;
         }
 
-        public static void RandomElemGeneration(int[][] array, int module)
+        public static void RandomElemGeneration(int[][] array, int value)
         {
             Random rand = new Random();
             
-            for (int i = 0; i < array.Length; i++)
+            switch(value)
             {
-                for (int j = 0; j < array[i].Length; j++)
-                {
-                    array[i][j] = rand.Next(-module+1, module+1);
-                }
+                case 1:
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        for (int j = 0; j < array[i].Length; j++)
+                        {
+                            array[i][j] = rand.Next(-999999, 1000000);
+                        }
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        for (int j = 0; j < array[i].Length; j++)
+                        {
+                            array[i][j] = rand.Next(-999999, 1000000);
+                        }
+                    }
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        for (int j = 0; j < array[i].Length; j++)
+                        {
+                            array[i][j] = rand.Next(-999999, 1000000);
+                        }
+                    }
+                    break;
+                case 10:
+                    break;
+                case 11:
+                    break;
+                case 12:
+                    break;
+                default:
+                    break;
             }
         }
     }
