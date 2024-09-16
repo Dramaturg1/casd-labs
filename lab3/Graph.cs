@@ -14,12 +14,12 @@ namespace lab3
         public long[,] elapsedMS;
         public int[] arraySizes;
 
-        public Graph(int value)
+        public Graph(int testNumber)
         {
             InitializeComponent();
-            arraySizes = new int[GetSize(value)];
-            InitializeGraph(value);
-            PlotGraph(value);
+            arraySizes = new int[GetSize(testNumber)];
+            InitializeGraph(testNumber);
+            PlotGraph(testNumber);
         }
 
         public void InitializeGraph(int testNumber)

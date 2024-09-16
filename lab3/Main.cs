@@ -119,7 +119,7 @@ namespace lab3
         {
             int counter = 0;
             int sizeCopy = size;
-            int sortNumber = endInd - startInd + 1;
+            int sortNumber = endInd - startInd;
             while (sizeCopy != 1)
             {
                 counter++;
@@ -151,75 +151,112 @@ namespace lab3
                     elapsedMS[idx, j] = totalElapsed / 20;
                 }
             });
-
+            for (int i = 0; i < elapsedMS.GetLength(0); i++)
+            {
+                for (int j = 0; j < elapsedMS.GetLength(1); j++)
+                {
+                    Console.Write(elapsedMS[i,j] + " ");
+                }
+                Console.WriteLine();
+            }
             return elapsedMS;
         }
 
-        public static int[][] ArrayGeneration(int counter, int value)
+        public static int[][] ArrayGeneration(int counter, int testNumber)
         {
             int[][] array = new int[counter][];
             for (int i = 0, size = 10; i < counter; i++, size *=10)
             {
                 array[i] = new int[size];
             }
-            RandomElemGeneration(array, value);
+            RandomElemGeneration(array, testNumber);
             return array;
         }
 
-        public static void RandomElemGeneration(int[][] array, int value)
+        public static void RandomElemGeneration(int[][] array, int testNumber)
         {
             Random rand = new Random();
-            
-            switch(value)
+
+            if (testNumber == 1 || testNumber == 5 || testNumber == 9)
             {
-                case 1:
-                    for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < array[i].Length; j++)
                     {
-                        for (int j = 0; j < array[i].Length; j++)
-                        {
-                            array[i][j] = rand.Next(-999999, 1000000);
-                        }
+                        array[i][j] = rand.Next(-999999, 1000000);
                     }
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        for (int j = 0; j < array[i].Length; j++)
-                        {
-                            array[i][j] = rand.Next(-999999, 1000000);
-                        }
-                    }
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        for (int j = 0; j < array[i].Length; j++)
-                        {
-                            array[i][j] = rand.Next(-999999, 1000000);
-                        }
-                    }
-                    break;
-                case 10:
-                    break;
-                case 11:
-                    break;
-                case 12:
-                    break;
-                default:
-                    break;
+                }
             }
+            else if (testNumber == 2 || testNumber == 6 || testNumber == 10)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < array[i].Length; j++)
+                    {
+                        array[i][j] = rand.Next(-999999, 1000000);
+                    }
+                }
+                int[] subArrayCount = { 2, 4, 8, 16, 3125, 15625 };
+                for (int i = 0; i < array.Length; i++)
+                {
+                    int subArrayLength = array[i].Length/subArrayCount[i];
+                    int[][] subArrays = new int[subArrayCount[i]][];
+                    for(int j = 0; j < subArrayCount[i]; j++)
+                    {
+                        subArrays[j] = array[i]
+                            .Skip(j*subArrayLength)
+                            .Take(subArrayLength)
+                            .ToArray();
+                    }
+
+                    for (int j = 0; j < subArrayCount[i]; j++)
+                    {
+                        Array.Sort(subArrays[j]);
+                    }
+
+                    int[] mergedArray = subArrays.SelectMany(subArray => subArray).ToArray();
+                    array[i] = mergedArray;
+                }
+                
+            }
+            else if (testNumber == 3 || testNumber == 7 || testNumber == 11)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < array[i].Length; j++)
+                    {
+                        array[i][j] = rand.Next(-999999, 1000000);
+                    }
+                }
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Array.Sort(array[i]);
+                }
+                int[] swapCount = { 1, 2, 4, 8, 1562, 7812 };
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < swapCount[i]; j++)
+                    {
+                        int tempInd1 = rand.Next(0, array[i].Length);
+                        int tempInd2 = rand.Next(0, array[i].Length);
+                        int temp = array[i][tempInd1];
+                        array[i][tempInd1] = array[i][tempInd2];
+                        array[i][tempInd2] = temp;
+
+                    }
+                }
+                /*
+                for (int i = 0; i<array.Length; i++)
+                {
+                    for (int j = 0; j < array[i].Length; j++)
+                    {
+                        Console.Write(array[i][j] + " ");
+                    }
+                    Console.WriteLine();
+                }
+                */
+            }
+            
         }
     }
 }
