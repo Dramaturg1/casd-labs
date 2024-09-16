@@ -7,25 +7,6 @@ namespace sorting
 {
     public class SortingAlgorithms
     {
-        /*
-        public static void BubbleSort(int[] array)
-        {
-            int temp;
-            for (int i = 0; i < array.Length-1; i++)
-            {
-                for (int j = 0; j < array.Length-i-1; j++)
-                {
-                    if (array[j] > array[j + 1])
-                    {
-                        temp = array[j];
-                        array[j] = array[j + 1];
-                        array[j + 1] = temp;
-                    }
-                }
-            }
-        }
-        */
-
         public static void BubbleSort(int[] array)
         {
             int n = array.Length;
@@ -162,76 +143,6 @@ namespace sorting
                     inc = 1;
             }
         }
-
-        /*class Node
-        {
-            public int Data;
-            public Node Left;
-            public Node Right;
-
-            public Node(int data)
-            {
-                Data = data;
-                Left = null;
-                Right = null;
-            }
-        }
-
-        class BinarySearchTree
-        {
-            public Node Root;
-
-            public BinarySearchTree()
-            {
-                Root = null;
-            }
-
-            public void Insert(int data)
-            {
-                Root = InsertRec(Root, data);
-            }
-           
-            private Node InsertRec(Node root, int data)
-            {
-                if (root == null)
-                {
-                    root = new Node(data);
-                    return root;
-                }
-
-                if (data < root.Data)
-                    root.Left = InsertRec(root.Left, data);
-                else
-                    root.Right = InsertRec(root.Right, data);
-
-                return root;
-            }
-
-            public void InOrderTraversal(Node root, List<int> result)
-            {
-                if (root != null)
-                {
-                    InOrderTraversal(root.Left, result);
-                    result.Add(root.Data);
-                    InOrderTraversal(root.Right, result);
-                }
-            }
-        }
-
-        public static void TreeSort(int[] array)
-        {
-            BinarySearchTree bst = new BinarySearchTree();
-            foreach (int value in array)
-            {
-                bst.Insert(value);
-            }
-            List<int> sortedList = new List<int>();
-            bst.InOrderTraversal(bst.Root, sortedList);
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = sortedList[i];
-            }
-        }*/
 
         class Node
         {
