@@ -33,77 +33,158 @@ namespace lab4
             this.elementData = new T[this.size];
         }
 
-        public void add(T item)
+        private void Resize()
+        {
+            T[] newArray = new T[(int)(this.size * 1.5) + 1];
+            for (int i = 0; i < this.size; i++)
+            {
+                newArray[i] = elementData[i];
+            }
+            this.elementData = newArray;
+            this.capacity = newArray.Length - this.size;
+        }
+
+        public void Add(T item)
         {
             if (this.capacity == 0)
             {
-                T[] newArray = new T[this.size];
-                newArray = elementData;
-                this.elementData = new T[(int)(this.size * 1.5 + 1)];
-                this.elementData = newArray;
-                this.size = elementData.Length;
-                this.capacity = this.size-newArray.Length;
+                this.Resize();
             }
             this.elementData[this.size++] = item;
             this.capacity--;
         }
 
-        public void addAll(T[] array)
+        public void AddAll(T[] array)
         {
             if (array.Length > this.capacity)
             {
-                
+                T[] newArray = new T[(int)((this.size + array.Length) * 1.5 + 1)];
+                for (int i = 0; i < this.size; i++)
+                {
+                    newArray[i] = elementData[i];
+                }
+                this.elementData = newArray;
+                this.capacity = newArray.Length - this.size;
             }
+            for (int i = 0; i < array.Length; i++)
+            {
+                this.elementData[this.size++] = array[i];
+                capacity--;
+            }
+
         }
 
-        public void clear()
+        public void Clear()
         {
-
+            this.elementData = new T[0];
+            this.size = 0;
+            this.capacity = 0;
         }
 
-        public bool containsAll(T[] array)
+        public bool ContainsAll(T[] array)
         {
-
+            bool found = false;
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; j < this.size; j++)
+                {
+                    if (array[i].Equals(this.elementData[j]) && !found)
+                    {
+                        found = true;
+                    }
+                }
+                if (!found)
+                    return false;
+            }
+            return true;
         }
 
-        public bool isEmpty()
+        public bool IsEmpty()
         {
             return size == 0;
         }
 
-        public void removeAll(T[] array)
+        public void RemoveAll(T[] array)
         {
-
+            T[] newArray = new T[this.size];
+            int ind = 0;
+            for (int i = 0; i < this.size; i++)
+            {
+                bool found = false;
+                for (int j = 0; j < array.Length; j++)
+                {
+                    if (this.elementData[i].Equals(array[j]))
+                    {
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    newArray[ind++] = this.elementData[i];
+                }
+            }
+            this.elementData = newArray;
+            this.capacity = newArray.Length - ind;
+            this.size = ind;
         }
 
-        public void retainAll(T[] array)
+        public void RetainAll(T[] array)
         {
-
+            T[] newArray = new T[this.size];
+            int ind = 0;
+            for (int i = 0; i < this.size; i++)
+            {
+                bool found = false;
+                for (int j = 0; j < array.Length; j++)
+                {
+                    if (this.elementData[i].Equals(array[j]))
+                    {
+                        found = true;
+                    }
+                }
+                if (found)
+                {
+                    newArray[ind++] = this.elementData[i];
+                }
+            }
+            this.elementData = newArray;
+            this.capacity = newArray.Length - ind;
+            this.size = ind;
         }
 
-        public int getSize()
-        {
-            return this.size;
-        }
+        public int GetSize() => this.size;
 
         public T[] ToArray()
         {
-
+            T[] temp = new T[this.size];
+            for (int i = 0; i < this.size; i++)
+            {
+                temp[i] = this.elementData[i];
+            }
+            return temp;
         }
 
-        public void add(int index, T item)
+        public void Add(int index, T item)
+        {
+            if (capacity == 0)
+                this.Resize();
+            for (int i = this.size; i > index; i--)
+            {
+                this.elementData[i] = this.elementData[i - 1];
+            }
+            this.elementData[index] = item;
+            capacity--;
+            this.size++;
+        }
+
+        public void AddAll(int index, T[] array)
         {
 
         }
 
-        public void addAll(int index, T[] array)
+        public T Get(int index)
         {
-
-        }
-
-        public void get(int index)
-        {
-
+            return this.elementData[index];
         }
 
         public int IndexOf(object obj)
@@ -111,22 +192,22 @@ namespace lab4
 
         }
 
-        public int lastIndexOf(object obj)
+        public int LastIndexOf(object obj)
         {
 
         }
 
-        public void remove(int index)
+        public void Remove(int index)
         {
 
         }
 
-        public void set(int index, T item)
+        public void Set(int index, T item)
         {
 
         }
 
-        public MyArrayList<T> subList(int fromIndex, int toIndex)
+        public MyArrayList<T> SubList(int fromIndex, int toIndex)
         {
 
         }
