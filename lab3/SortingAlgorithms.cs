@@ -163,7 +163,7 @@ namespace sorting
             }
         }
 
-        class Node
+        /*class Node
         {
             public int Data;
             public Node Left;
@@ -190,7 +190,7 @@ namespace sorting
             {
                 Root = InsertRec(Root, data);
             }
-
+           
             private Node InsertRec(Node root, int data)
             {
                 if (root == null)
@@ -231,8 +231,85 @@ namespace sorting
             {
                 array[i] = sortedList[i];
             }
+        }*/
+
+        class Node
+        {
+            public int Data;
+            public Node Left;
+            public Node Right;
+
+            public Node(int data)
+            {
+                Data = data;
+                Left = null;
+                Right = null;
+            }
         }
 
+        class BinarySearchTree
+        {
+            public Node Root;
+
+            public BinarySearchTree()
+            {
+                Root = null;
+            }
+
+            public void Insert(int data)
+            {
+                Root = InsertRec(Root, data);
+            }
+
+            private Node InsertRec(Node root, int data)
+            {
+                if (root == null)
+                {
+                    return new Node(data);
+                }
+
+                if (data < root.Data)
+                    root.Left = InsertRec(root.Left, data);
+                else
+                    root.Right = InsertRec(root.Right, data);
+
+                return root;
+            }
+
+            public void InOrderTraversal(Node root, List<int> result)
+            {
+                Stack<Node> stack = new Stack<Node>();
+                Node current = root;
+
+                while (current != null || stack.Count > 0)
+                {
+                    while (current != null)
+                    {
+                        stack.Push(current);
+                        current = current.Left;
+                    }
+
+                    current = stack.Pop();
+                    result.Add(current.Data);
+                    current = current.Right;
+                }
+            }
+        }
+
+        public static void TreeSort(int[] array)
+        {
+            BinarySearchTree bst = new BinarySearchTree();
+            foreach (int value in array)
+            {
+                bst.Insert(value);
+            }
+            List<int> sortedList = new List<int>();
+            bst.InOrderTraversal(bst.Root, sortedList);
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = sortedList[i];
+            }
+        }
         public static void GnomeSort(int[] array)
         {
             if (array.Length <= 1)
@@ -311,11 +388,20 @@ namespace sorting
 
         public static void QuickSort(int[] array, int left, int right)
         {
-            if (left < right)
+            while (left < right)
             {
                 int pivotIndex = Partition(array, left, right);
-                QuickSort(array, left, pivotIndex - 1);
-                QuickSort(array, pivotIndex + 1, right);
+
+                if (pivotIndex - left < right - pivotIndex)
+                {
+                    QuickSort(array, left, pivotIndex - 1);
+                    left = pivotIndex + 1;
+                }
+                else
+                {
+                    QuickSort(array, pivotIndex + 1, right);
+                    right = pivotIndex - 1;
+                }
             }
         }
 

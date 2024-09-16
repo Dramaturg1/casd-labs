@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,9 @@ namespace lab3
             string test1 = "Массивы случайных чисел";
             string test2 = "Массивы с отсортированными подмассивами";
             string test3 = "Отсортированные массивы с перестановками";
-            string test4 = "Массивы с повторениями; массивы, остортированные прямо и обратно";
+            string test4 = "Массивы, отсортированные прямо";
+            string test5 = "Масиивы, отсортированные в обратном порядке";
+            string test6 = "Массивы с повторяющимися элементами";
             if (comboBox1.SelectedItem == null || comboBox2.SelectedItem == null)
             {
                 MessageBox.Show("Не были выбраны тестовые данные");
@@ -73,44 +76,74 @@ namespace lab3
                 Form graph = new Graph(4);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test1))  
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test5))
             {
                 Form graph = new Graph(5);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test2)) 
+            if (comboBox1.SelectedItem.ToString() == gr1 && (comboBox2.SelectedItem.ToString() == test6))
             {
                 Form graph = new Graph(6);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test3)) 
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test1))  
             {
                 Form graph = new Graph(7);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test4))  
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test2)) 
             {
                 Form graph = new Graph(8);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test1)) 
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test3)) 
             {
                 Form graph = new Graph(9);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))  
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test4))  
             {
                 Form graph = new Graph(10);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))  
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test5))
             {
                 Form graph = new Graph(11);
                 graph.Show();
             }
-            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))
+            if (comboBox1.SelectedItem.ToString() == gr2 && (comboBox2.SelectedItem.ToString() == test6))
             {
                 Form graph = new Graph(12);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test1)) 
+            {
+                Form graph = new Graph(13);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test2))  
+            {
+                Form graph = new Graph(14);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test3))  
+            {
+                Form graph = new Graph(15);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test4))
+            {
+                Form graph = new Graph(16);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test5))
+            {
+                Form graph = new Graph(17);
+                graph.Show();
+            }
+            if (comboBox1.SelectedItem.ToString() == gr3 && (comboBox2.SelectedItem.ToString() == test6))
+            {
+                Form graph = new Graph(18);
                 graph.Show();
             }
         }
@@ -177,7 +210,7 @@ namespace lab3
         {
             Random rand = new Random();
 
-            if (testNumber == 1 || testNumber == 5 || testNumber == 9)
+            if (testNumber == 1 || testNumber == 7 || testNumber == 13)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -187,7 +220,7 @@ namespace lab3
                     }
                 }
             }
-            else if (testNumber == 2 || testNumber == 6 || testNumber == 10)
+            else if (testNumber == 2 || testNumber == 8 || testNumber == 14)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -219,7 +252,7 @@ namespace lab3
                 }
                 
             }
-            else if (testNumber == 3 || testNumber == 7 || testNumber == 11)
+            else if (testNumber == 3 || testNumber == 9 || testNumber == 15)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -245,6 +278,7 @@ namespace lab3
 
                     }
                 }
+                
                 /*
                 for (int i = 0; i<array.Length; i++)
                 {
@@ -256,7 +290,56 @@ namespace lab3
                 }
                 */
             }
-            
+            else if (testNumber == 4 || testNumber == 10 || testNumber == 16)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < array[i].Length; j++)
+                    {
+                        array[i][j] = rand.Next(-999999, 1000000);
+                    }
+                }
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Array.Sort(array[i]);
+                }
+            }
+            else if(testNumber == 5 || testNumber == 11 || testNumber == 17)
+            {
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    for (int j = 0; j < array[i].Length; j++)
+                    {
+                        array[i][j] = rand.Next(-999999, 1000000);
+                    }
+                }
+                for (int i = 0; i < array.Length; i++)
+                {
+                    Array.Sort(array[i]);
+                    Array.Reverse(array[i]);
+                }
+            }
+
+            else if (testNumber == 6 || testNumber == 12 || testNumber == 18)
+{
+                int fixedValue = rand.Next(-999999, 1000000);
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    int halfLength = array[i].Length / 2;
+
+                    for (int j = 0; j < halfLength; j++)
+                    {
+                        array[i][j] = fixedValue;
+                    }
+
+                    for (int j = halfLength; j < array[i].Length; j++)
+                    {
+                        array[i][j] = rand.Next(-999999, 1000000);
+                    }
+                }
+            }
         }
     }
 }

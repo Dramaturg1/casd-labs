@@ -39,9 +39,9 @@ namespace lab3
             int endIndex = GetIndex(testNumber).Item2;
 
             Main mainForm = new Main();
-            if (testNumber >= 1 && testNumber < 5)
+            if (testNumber >= 1 && testNumber < 7)
             {
-                elapsedMS = mainForm.Test(0, 5, 10000, testNumber);
+                elapsedMS = mainForm.Test(startIndex, endIndex, 10000, testNumber);
                 arraySizes[0] = 10;
                 arraySizes[1] = 100;
                 arraySizes[2] = 1000;
@@ -49,9 +49,9 @@ namespace lab3
                 points = new PointPairList[5];
                 curves = new LineItem[5];
             }
-            else if (testNumber >= 5 && testNumber < 9)
+            else if (testNumber >= 7 && testNumber < 13)
             {
-                elapsedMS = mainForm.Test(5, 8, 100000, testNumber);
+                elapsedMS = mainForm.Test(startIndex, endIndex, 100000, testNumber);
                 arraySizes[0] = 10;
                 arraySizes[1] = 100;
                 arraySizes[2] = 1000;
@@ -61,9 +61,9 @@ namespace lab3
                 curves = new LineItem[3];
 
             }
-            else if (testNumber >=9 && testNumber < 13)
+            else if (testNumber >=13 && testNumber < 19)
             {
-                elapsedMS = mainForm.Test(8, 15, 1000000, testNumber);
+                elapsedMS = mainForm.Test(startIndex, endIndex, 1000000, testNumber);
                 arraySizes[0] = 10;
                 arraySizes[1] = 100;
                 arraySizes[2] = 1000;
@@ -162,15 +162,15 @@ namespace lab3
 
         public int GetSize(int value)
         {
-            if (value >= 1 && value < 5)
+            if (value >= 1 && value < 7)
             {
                 return 4;
             }
-            if (value >= 5 && value < 8)
+            if (value >= 7 && value < 13)
             {
                 return 5;
             }
-            if (value >= 8 && value < 13)
+            if (value >= 13 && value < 19)
             {
                 return 6;
             }
@@ -179,15 +179,15 @@ namespace lab3
 
         public Tuple<int, int> GetIndex(int value)
         {
-            if (value >= 1 && value < 5)
+            if (value >= 1 && value < 7)
             {
                 return Tuple.Create<int, int>(0, 5);
             }
-            if (value >= 5 && value < 8)
+            if (value >= 7 && value < 13)
             {
                 return Tuple.Create<int, int>(5, 8);
             }
-            if (value >= 8 && value < 13)
+            if (value >= 13 && value < 19)
             {
                 return Tuple.Create<int, int>(8, 15);
             }
@@ -196,15 +196,15 @@ namespace lab3
 
         public int CurveNumber(int value)
         {
-            if (value >= 1 && value < 5)
+            if (value >= 1 && value < 7)
             {
                 return 5;
             }
-            if (value >= 5 && value < 8)
+            if (value >= 7 && value < 13)
             {
                 return 3;
             }
-            if (value >= 8 && value < 13)
+            if (value >= 13 && value < 19)
             {
                 return 7;
             }
