@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace lab4
 {
-    internal class MyArrayList<T>
+    public class MyArrayList<T>
     {
         private T[] elementData;
         private int size;

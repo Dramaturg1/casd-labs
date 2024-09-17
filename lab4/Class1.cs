@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// поменять логику apacity (чтобы было сравнение с size)
+// исправитб методы
+
 namespace lab4
 {
-    internal class MyArrayList<T>
+    public class MyArrayList<T>
     {
         private T[] elementData;
         private int size;
@@ -16,60 +19,52 @@ namespace lab4
         {
             this.elementData = new T[0];
             this.size = 0;
-            this.capacity = 4;
+            this.capacity = 0;
         }
 
         public MyArrayList(T[] array)
         {
             this.elementData = array;
             this.size = array.Length;
-            this.capacity = this.size + 4;
+            this.capacity = array.Length;
         }
 
         public MyArrayList(int size)
         {
-            this.size = capacity;
-            this.capacity = size + 4;
-            this.elementData = new T[this.size];
+            this.size = 0;
+            this.capacity = size;
+            this.elementData = new T[this.capacity];
         }
 
         private void Resize(int resize = 0)
         {
-            T[] newArray = new T[(int)(this.size + resize * 1.5) + 1];
+            T[] newArray = new T[(int)((this.size + resize) * 1.5) + 1];
             for (int i = 0; i < this.size; i++)
             {
                 newArray[i] = elementData[i];
             }
             this.elementData = newArray;
-            this.capacity = newArray.Length - this.size;
+            this.capacity = newArray.Length;
         }
 
         public void Add(T item)
         {
-            if (this.capacity == 0)
+            if (this.capacity == this.size)
             {
                 this.Resize();
             }
             this.elementData[this.size++] = item;
-            this.capacity--;
         }
 
         public void AddAll(T[] array)
         {
-            if (array.Length > this.capacity)
+            if (array.Length + this.size >= capacity)
             {
-                T[] newArray = new T[(int)((this.size + array.Length) * 1.5 + 1)];
-                for (int i = 0; i < this.size; i++)
-                {
-                    newArray[i] = elementData[i];
-                }
-                this.elementData = newArray;
-                this.capacity = newArray.Length - this.size;
+                this.Resize(array.Length);
             }
             for (int i = 0; i < array.Length; i++)
             {
                 this.elementData[this.size++] = array[i];
-                capacity--;
             }
 
         }
@@ -124,7 +119,6 @@ namespace lab4
                 }
             }
             this.elementData = newArray;
-            this.capacity = newArray.Length - ind;
             this.size = ind;
         }
 
@@ -148,7 +142,7 @@ namespace lab4
                 }
             }
             this.elementData = newArray;
-            this.capacity = newArray.Length - ind;
+            this.capacity = newArray.Length;
             this.size = ind;
         }
 
@@ -166,32 +160,29 @@ namespace lab4
 
         public void Add(int index, T item)
         {
-            if (capacity == 0)
+            if (capacity <= this.size)
                 this.Resize();
             for (int i = this.size; i > index; i--)
             {
                 this.elementData[i] = this.elementData[i - 1];
             }
             this.elementData[index] = item;
-            capacity--;
             this.size++;
         }
 
         public void AddAll(int index, T[] array)
         {
-            if (this.capacity == 0)
+            if (this.capacity <= this.size + array.Length)
                 this.Resize(array.Length);
-            int indOffset = index + array.Length;
-            this.size += array.Length;
-            for (int i = 0; i < array.Length; i++)
+            for (int i = this.size - 1; i >= index; i--)
             {
-                this.elementData[indOffset + i] = array[i];
+                this.elementData[i + array.Length] = this.elementData[i];
             }
             for (int i = 0; i < array.Length; i++)
             {
                 this.elementData[index + i] = array[i];
             }
-            this.capacity -= array.Length;
+            this.size += array.Length;
         }
 
         public T Get(int index)
@@ -226,7 +217,6 @@ namespace lab4
                 this.elementData[i] = this.elementData[i + 1];
             }
             this.size--;
-            this.capacity--;
         }
 
         public void Set(int index, T item)
