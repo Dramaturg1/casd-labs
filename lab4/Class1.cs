@@ -33,9 +33,9 @@ namespace lab4
             this.elementData = new T[this.size];
         }
 
-        private void Resize()
+        private void Resize(int resize = 0)
         {
-            T[] newArray = new T[(int)(this.size * 1.5) + 1];
+            T[] newArray = new T[(int)(this.size + resize * 1.5) + 1];
             for (int i = 0; i < this.size; i++)
             {
                 newArray[i] = elementData[i];
@@ -179,7 +179,19 @@ namespace lab4
 
         public void AddAll(int index, T[] array)
         {
-
+            if (this.capacity == 0)
+                this.Resize(array.Length);
+            int indOffset = index + array.Length;
+            this.size += array.Length;
+            for (int i = 0; i < array.Length; i++)
+            {
+                this.elementData[indOffset + i] = array[i];
+            }
+            for (int i = 0; i < array.Length; i++)
+            {
+                this.elementData[index + i] = array[i];
+            }
+            this.capacity -= array.Length;
         }
 
         public T Get(int index)
@@ -189,27 +201,47 @@ namespace lab4
 
         public int IndexOf(object obj)
         {
-
+            for (int i = 0; i < this.size; i++)
+            {
+                if (this.elementData[i].Equals(obj))
+                    return i;
+            }
+            return -1;
         }
 
         public int LastIndexOf(object obj)
         {
-
+            for (int i = this.size - 1; i >= 0; i--)
+            {
+                if (this.elementData[i].Equals((object)obj))
+                    return i;
+            }
+            return -1;
         }
 
         public void Remove(int index)
         {
-
+            for (int i = index; i < this.size - 1; i++)
+            {
+                this.elementData[i] = this.elementData[i + 1];
+            }
+            this.size--;
+            this.capacity--;
         }
 
         public void Set(int index, T item)
         {
-
+            this.elementData[index] = item;
         }
 
         public MyArrayList<T> SubList(int fromIndex, int toIndex)
         {
-
+            MyArrayList<T> subList = new MyArrayList<T>(toIndex - fromIndex + 1);
+            for(int i = 0; i < toIndex - fromIndex + 1; i++)
+            {
+                subList.Add(this.elementData[fromIndex + i]);
+            };
+            return subList;
         }
     }
 }
