@@ -58,6 +58,10 @@ namespace lab4
 
         public void AddAll(T[] array)
         {
+            if (array == null)
+                throw new Exception("Trying to add null array");
+            if (array.Length == 0)
+                return;
             if (array.Length + this.size >= capacity)
             {
                 this.Resize(array.Length);
@@ -78,6 +82,11 @@ namespace lab4
 
         public bool ContainsAll(T[] array)
         {
+            if (array == null || array.Length == 0)
+                throw new ArgumentNullException("array");
+            {
+                
+            }
             bool found = false;
             for (int i = 0; i < array.Length; i++)
             {
@@ -101,6 +110,10 @@ namespace lab4
 
         public void RemoveAll(T[] array)
         {
+            if (array == null)
+                throw new ArgumentNullException("array");
+            if (array.Length == 0)
+                return;
             T[] newArray = new T[this.size];
             int ind = 0;
             for (int i = 0; i < this.size; i++)
@@ -124,6 +137,10 @@ namespace lab4
 
         public void RetainAll(T[] array)
         {
+            if (array == null)
+                throw new ArgumentNullException("array");
+            if (array.Length == 0)
+                return;
             T[] newArray = new T[this.size];
             int ind = 0;
             for (int i = 0; i < this.size; i++)
@@ -150,6 +167,8 @@ namespace lab4
 
         public T[] ToArray()
         {
+            if (this.size == 0)
+                throw new Exception("Trying to return an empty array");
             T[] temp = new T[this.size];
             for (int i = 0; i < this.size; i++)
             {
@@ -160,6 +179,8 @@ namespace lab4
 
         public void Add(int index, T item)
         {
+            if (index > this.size)
+                throw new ArgumentOutOfRangeException("index");
             if (capacity <= this.size)
                 this.Resize();
             for (int i = this.size; i > index; i--)
@@ -172,6 +193,12 @@ namespace lab4
 
         public void AddAll(int index, T[] array)
         {
+            if (index > this.size)
+                throw new ArgumentOutOfRangeException("index");
+            if (array == null)
+                throw new ArgumentNullException("array");
+            if (array.Length == 0)
+                return;
             if (this.capacity <= this.size + array.Length)
                 this.Resize(array.Length);
             for (int i = this.size - 1; i >= index; i--)
@@ -187,6 +214,8 @@ namespace lab4
 
         public T Get(int index)
         {
+            if (index > this.size)
+                throw new ArgumentOutOfRangeException("index");
             return this.elementData[index];
         }
 
@@ -212,6 +241,8 @@ namespace lab4
 
         public void Remove(int index)
         {
+            if (index > this.size)
+                throw new ArgumentOutOfRangeException("index");
             for (int i = index; i < this.size - 1; i++)
             {
                 this.elementData[i] = this.elementData[i + 1];
@@ -221,6 +252,8 @@ namespace lab4
 
         public void Set(int index, T item)
         {
+            if (index > this.size)
+                throw new ArgumentOutOfRangeException("index");
             this.elementData[index] = item;
         }
 
