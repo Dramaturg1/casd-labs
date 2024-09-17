@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C9C5D2B-044A-4967-A74D-A5D6B4450F70}</ProjectGuid>
+    <ProjectGuid>{94C1F226-E743-49B7-BC8D-1B6D990D3294}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyArrayListTests</RootNamespace>

@@ -9,7 +9,6 @@ namespace MyArrayListTests
         [TestMethod]
         public void TestMethod1()
         {
-            
         }
     }
 }
