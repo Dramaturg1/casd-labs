@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.CompilerServices;
+using lab4;
 
 
 namespace lab5
@@ -48,25 +49,24 @@ namespace lab5
                 }
             }
 
-            lab4.MyArrayList<string> tagValueToLower = new lab4.MyArrayList<string>();
             for (int i = 0; i < tagValue.Size(); i++)
             {
-                tagValueToLower.Add(tagValue[i].ToLower());
+                tagValue[i] = tagValue[i].ToLower();
             }
 
-            tagValue.Clear();
+            MyArrayList<string> resultList = new MyArrayList<string>();
             
-            for (int i = 0; i < tagValueToLower.Size(); i++)
+            for (int i = 0; i < tagValue.Size(); i++)
             {
-                if (!tagValue.Contains(tagValueToLower[i]))
+                if (!resultList.Contains(tagValue[i]))
                 {
-                    tagValue.Add(tagValueToLower[i]);
+                    resultList.Add(tagValue[i]);
                 }
             }
 
-            for (int i = 0; i < tagValue.Size(); i++)
+            for (int i = 0; i < resultList.Size(); i++)
             {
-                Console.Write(tagValue[i] + " ");
+                Console.Write(resultList[i] + " ");
             }
             
             Console.ReadLine();

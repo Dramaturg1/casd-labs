@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -175,8 +176,25 @@ namespace lab4
 
         public int Size() => this.size;
 
-        public T this[int index] => this.elementData[index];
-
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= this.size)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return this.elementData[index];
+            }
+            set
+            {
+                if (index < 0 || index >= this.size)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                this.elementData[(int)index] = value;   
+            }
+        } 
 
         public T[] ToArray()
         {
