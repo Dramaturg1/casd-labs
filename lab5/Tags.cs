@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.CompilerServices;
 
+
 namespace lab5
 {
-    internal class Program
+    internal class Tags
     {
         static void Main(string[] args)
         {
-            List<string> tagValue = new List<string>();
-            Stack<char> tags = new Stack<char>();
+            lab4.MyArrayList<string> tagValue = new lab4.MyArrayList<string>();
+            lab4.MyArrayList<char> tags = new lab4.MyArrayList<char>();
             string path = "C:/Users/Sofok/source/repos/lab5/lab5/bin/Debug/input.txt";
             using (StreamReader file = new StreamReader(path))
             {
@@ -22,37 +23,50 @@ namespace lab5
                 {
                     Console.WriteLine(temp);
                     string value = "";
+                    int ind = 0;
                     for (int i = 0; i < temp.Length; i++)
                     {
                         if (temp[i] == '<')
                         {
-                            tags.Push(temp[i]);
+                            tags.Add(temp[i]);
+                            ind++;
                         }
                         else if (temp[i] == '>')
                         {
-                            tags.Pop();
+                            tags.Remove(ind--);
                             if (!string.IsNullOrEmpty(value))
                             {
                                 tagValue.Add(value);
                                 value = "";
                             }
                         }
-                        else if (temp[i] != '/' && temp[i] != ' ')
+                        else if (!tags.IsEmpty() && temp[i] != '/' && temp[i] != ' ')
                         {
                             value += temp[i];
                         }
                     }
                 }
             }
-            HashSet<string> strings = new HashSet<string>();
-            for (int i = 0; i < tagValue.Count; i++)
+
+            lab4.MyArrayList<string> tagValueToLower = new lab4.MyArrayList<string>();
+            for (int i = 0; i < tagValue.Size(); i++)
             {
-                tagValue[i] = tagValue[i].ToLower();
-                strings.Add(tagValue[i]);
+                tagValueToLower.Add(tagValue[i].ToLower());
             }
-            foreach (string s in strings)
+
+            tagValue.Clear();
+            
+            for (int i = 0; i < tagValueToLower.Size(); i++)
             {
-                Console.Write(s + " ");
+                if (!tagValue.Contains(tagValueToLower[i]))
+                {
+                    tagValue.Add(tagValueToLower[i]);
+                }
+            }
+
+            for (int i = 0; i < tagValue.Size(); i++)
+            {
+                Console.Write(tagValue[i] + " ");
             }
             
             Console.ReadLine();
