@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// поменять логику apacity (чтобы было сравнение с size)
-// исправитб методы
-
 namespace lab4
 {
     public class MyArrayList<T>
