@@ -10,7 +10,15 @@ namespace lab4
     {
         static void Main(string[] args)
         {
-            
+            MyArrayList<string> list = new MyArrayList<string>();
+            list.Add("sdfsf");
+            list.Add("sdadad");
+            list.Add("sdsssssss");
+            for (int i = 0; i < list.GetSize(); i++)
+            {
+                Console.WriteLine(list[i]);
+            }
+            Console.ReadLine();
         }
     }
 }

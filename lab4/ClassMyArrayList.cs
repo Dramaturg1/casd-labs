@@ -165,6 +165,8 @@ namespace lab4
 
         public int GetSize() => this.size;
 
+        public T this[int index] => this.elementData[index];
+
         public T[] ToArray()
         {
             if (this.size == 0)
