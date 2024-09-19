@@ -285,15 +285,17 @@ namespace lab4
             return this.elementData[index];
         }
 
-        public void Remove(int index)
+        public T Remove(int index)
         {
             if (index > this.size)
                 throw new ArgumentOutOfRangeException("index");
+            T value = this.elementData[index];
             for (int i = index; i < this.size - 1; i++)
             {
                 this.elementData[i] = this.elementData[i + 1];
             }
             this.size--;
+            return value;
         }
 
         public void Set(int index, T item)
