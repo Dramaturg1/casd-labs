@@ -5,9 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// добавить toArray(T[])
-// обавить contains(o obj)
-
 namespace lab4
 {
     public class MyArrayList<T>
@@ -81,16 +78,34 @@ namespace lab4
             this.capacity = 0;
         }
 
-        public bool Contains(T item)
+        public bool Contains(object obj)
         {
             for (int i = 0; i < this.size; i++)
             {
-                if (this.elementData[i].Equals(item))
+                if (this.elementData[i].Equals(obj))
                     return true;
             }
             return false;
         }
 
+        public T[] ToArray(T[] array)
+        {
+            T[] values = new T[this.size];
+            for (int i = 0; i < this.size; i++)
+            {
+                values[i] = this.elementData[i];
+            }
+            if (array == null)
+            {
+                array = new T[this.size];
+                for (int i = 0; i < this.size; i++)
+                {
+                    array[i] = values[i];
+                }
+                return array;
+            }
+            return values;
+        }
         public bool ContainsAll(T[] array)
         {
             if (array == null || array.Length == 0)
