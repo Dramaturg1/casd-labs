@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -77,6 +78,34 @@ namespace lab4
             this.capacity = 0;
         }
 
+        public bool Contains(object obj)
+        {
+            for (int i = 0; i < this.size; i++)
+            {
+                if (this.elementData[i].Equals(obj))
+                    return true;
+            }
+            return false;
+        }
+
+        public T[] ToArray(T[] array)
+        {
+            T[] values = new T[this.size];
+            for (int i = 0; i < this.size; i++)
+            {
+                values[i] = this.elementData[i];
+            }
+            if (array == null)
+            {
+                array = new T[this.size];
+                for (int i = 0; i < this.size; i++)
+                {
+                    array[i] = values[i];
+                }
+                return array;
+            }
+            return values;
+        }
         public bool ContainsAll(T[] array)
         {
             if (array == null || array.Length == 0)
@@ -160,9 +189,27 @@ namespace lab4
             this.size = ind;
         }
 
-        public int GetSize() => this.size;
+        public int Size() => this.size;
 
-        public T this[int index] => this.elementData[index];
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= this.size)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                return this.elementData[index];
+            }
+            set
+            {
+                if (index < 0 || index >= this.size)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                this.elementData[(int)index] = value;   
+            }
+        } 
 
         public T[] ToArray()
         {
@@ -211,13 +258,6 @@ namespace lab4
             this.size += array.Length;
         }
 
-        public T Get(int index)
-        {
-            if (index > this.size)
-                throw new ArgumentOutOfRangeException("index");
-            return this.elementData[index];
-        }
-
         public int IndexOf(object obj)
         {
             for (int i = 0; i < this.size; i++)
@@ -236,6 +276,13 @@ namespace lab4
                     return i;
             }
             return -1;
+        }
+
+        public T Get(int index)
+        {
+            if (index > this.size)
+                throw new ArgumentOutOfRangeException("index");
+            return this.elementData[index];
         }
 
         public void Remove(int index)
