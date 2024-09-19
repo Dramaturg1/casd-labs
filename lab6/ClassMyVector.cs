@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace lab6
 {
@@ -299,7 +300,15 @@ namespace lab6
 
         public void RemoveRange(int begin, int end)
         {
-
+            if (begin < 0 || begin  >= this.elementCount || end < 0 || end >= this.elementCount)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            if (begin == end) this.OffsetLeft(begin);
+            for (int i = 0; i < end - begin; i++)
+            {
+                this.OffsetLeft(begin);
+            }
         }
 
 
