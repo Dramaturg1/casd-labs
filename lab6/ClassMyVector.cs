@@ -107,7 +107,7 @@ namespace lab6
 
         public void Clear()
         {
-            this.elementData = null;
+            this.elementData = new T[0];
             this.elementCount = 0;
         }
 
@@ -158,7 +158,7 @@ namespace lab6
             if (a == null || a.Length == 0) throw new ArgumentNullException(nameof(a), "Array cannot be null or empty");
             T[] newArray = new T[this.elementCount];
             int index = 0;
-            for (int i = 0; i < this.elementData.Length; i++)
+            for (int i = 0; i < this.elementCount; i++)
             {
                 bool found = false;
                 for (int j = 0; j < a.Length; j++)
@@ -172,7 +172,7 @@ namespace lab6
                     newArray[index++] = this.elementData[i];
                 }
             }
-            this.elementCount = newArray.Length;
+            this.elementCount = index;
             this.elementData = newArray;
         }
 
@@ -181,7 +181,7 @@ namespace lab6
             if (a == null || a.Length == 0) throw new ArgumentNullException(nameof(a), "Array cannot be null or empty");
             T[] newArray = new T[this.elementCount];
             int index = 0;
-            for (int i = 0; i < this.elementData.Length; i++)
+            for (int i = 0; i < this.elementCount; i++)
             {
                 bool found = false;
                 for (int j = 0; j < a.Length; j++)
@@ -196,7 +196,7 @@ namespace lab6
                     newArray[index++] = this.elementData[i];
                 }
             }
-            this.elementCount = newArray.Length;
+            this.elementCount = index;
             this.elementData = newArray;
         }
 
@@ -305,7 +305,7 @@ namespace lab6
                 throw new ArgumentOutOfRangeException();
             }
             if (begin == end) this.OffsetLeft(begin);
-            for (int i = 0; i < end - begin; i++)
+            for (int i = 0; i < end - begin + 1; i++)
             {
                 this.OffsetLeft(begin);
             }
